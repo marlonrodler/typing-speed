@@ -1,0 +1,119 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100vw;
+    background-color: #f5f5f5;
+}
+
+.box-score {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 20px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100px;
+    width: 100px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.span-score {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #000;
+}
+
+.span-score-number{
+    font-size: 2rem;
+    font-weight: 700;
+    color: rgba(0, 0, 0, 0.2);
+}
+
+.box-typing {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    height: auto;
+    width: 420px;
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgb(0 0 0 / 20%);
+}
+
+.box-words{
+    display: flex;
+    flex-direction: row;
+    padding: 12px;
+    justify-content: space-around;
+    width: 92.5%;
+    flex-wrap: wrap;
+}
+
+.box-form{
+    padding: 10px;
+    display: flex;
+    width: 93.5%;
+    justify-content: center;
+}
+
+.span-text{
+    text-transform: uppercase;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    font-size: 0.8rem;
+    font-weight: 700;
+    padding: 8px;
+    margin: 4px;
+    color: #000;
+    border-radius: 16px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.input-typing{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 25px;
+    width: 100%;
+    padding: 4px 8px;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #000;
+    border: none;
+    border-radius: 10px 0 0 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.input-typing:focus{
+    outline: none;
+}
+
+.button-typing{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px 8px;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #fff;
+    background-color: #000;
+    border: none;
+    border-radius: 0 10px 10px 0;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.button-typing:hover{
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.7);
+}
