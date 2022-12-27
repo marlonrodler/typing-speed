@@ -9,12 +9,9 @@ export default function Typing() {
     const handleChange = async event => {
         event.preventDefault();
         var value = event.target.value;
-        console.log('event.target.value:',event.target.value);
         if(words.length > 0){ 
             if (value.toLowerCase() === words[0].toLowerCase()) {
-                console.log('Confirmed');
                 event.target.value = '';
-                console.log('words:',words);
                 setScore(words[0].length + score + 5);
                 words.shift();
             }
