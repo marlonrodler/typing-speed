@@ -21,7 +21,6 @@ export default function Typing() {
         }
 
         if (timer === 0) {
-            setExecuteOneTime(true);
             handleReset();
         }
 
@@ -61,6 +60,7 @@ export default function Typing() {
         }
         setWords([]);
         setInputResetDisabled(true);
+        setExecuteOneTime(true);
     }
 
     const handleChange = async event => {
