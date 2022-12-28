@@ -11,10 +11,11 @@ export default function Typing() {
     const [intervalId, setIntervalId] = React.useState(null)
     const [inputDisabled, setInputDisabled] = useState(true);
     const ref = useRef(null);
+    var count = 0;
 
     useEffect(() => {
-        if(timer !== 0 && words.length <= 1) {
-            console.log('words:',words);
+        if (timer !== 0 && words.length < 2) {
+            console.log('words:', words);
             console.log('entrou');
             getWords();
         }
@@ -27,7 +28,21 @@ export default function Typing() {
     const getWords = async () => {
         try {
             const response = await api.get(`random`);
-            setWords(oldArray => [...oldArray,response.data.word] );
+            let value = (response.data.word).normalize("NFD").replace(/\p{Diacritic}/gu, "");
+            console.log('value:', value);
+            console.log('response.data.word:', response.data.word);
+            if (response.data.word.search(' ') === -1 && (value === response.data.word)) {
+                count = count + 1;
+                setWords(oldArray => [...oldArray, response.data.word]);
+                console.log('count:', count);
+            } else {
+                getWords();
+            }
+
+            console.log('words.length:', words.length);
+            if (count <= 1) {
+                getWords();
+            }
         } catch (error) {
         }
     }
@@ -38,7 +53,9 @@ export default function Typing() {
         setIntervalId(null);
         setInputDisabled(true);
         setTimer(10);
-        setScore(0);
+        if (timer !== 0) {
+            setScore(0);
+        }
         setWords([]);
     }
 
@@ -50,8 +67,7 @@ export default function Typing() {
             if (value.toLowerCase() === words[0].toLowerCase()) {
                 setWord('');
                 setScore(words[0].length + score);
-                let lengthWord = words[0].length;
-                setTimer(timer => timer + (Math.round(timer / lengthWord)) + 3);
+                setTimer(timer => timer + 3);
                 words.shift();
             }
         }
@@ -66,6 +82,7 @@ export default function Typing() {
     const handleButtonStart = () => {
         setInputDisabled(!inputDisabled);
         if (inputDisabled) {
+            setScore(0);
             setTimeout(() => {
                 ref.current.focus();
             }, 1);
