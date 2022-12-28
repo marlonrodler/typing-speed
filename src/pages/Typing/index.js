@@ -129,7 +129,6 @@ export default function Typing() {
                 </div>
                 <div className='box-form'>
                     <input ref={ref} value={word} className='input-typing' type='text' onKeyDown={handleKeyDown} onChange={handleChange} disabled={inputDisabled} />
-                    {/* <button className='button-typing' type="submit" onClick={handleClick}>OK</button> */}
                 </div>
             </div>
         </div>
