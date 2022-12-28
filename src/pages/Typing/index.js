@@ -10,6 +10,8 @@ export default function Typing() {
     const [timer, setTimer] = useState(10);
     const [intervalId, setIntervalId] = React.useState(null)
     const [inputDisabled, setInputDisabled] = useState(true);
+    const [inputResetDisabled, setInputResetDisabled] = useState(true);
+    const [executeOneTime, setExecuteOneTime] = useState(false);
     const ref = useRef(null);
     var count = 0;
 
@@ -19,7 +21,12 @@ export default function Typing() {
         }
 
         if (timer === 0) {
+            setExecuteOneTime(true);
             handleReset();
+        }
+
+        if(score !== 0){
+            setInputResetDisabled(false);
         }
     });
 
@@ -53,6 +60,7 @@ export default function Typing() {
             setScore(0);
         }
         setWords([]);
+        setInputResetDisabled(true);
     }
 
     const handleChange = async event => {
@@ -82,7 +90,12 @@ export default function Typing() {
     const handleButtonStart = () => {
         setInputDisabled(!inputDisabled);
         if (inputDisabled) {
-            setScore(0);
+            setInputResetDisabled(false);
+            if(executeOneTime){
+                setExecuteOneTime(false);
+                setScore(0);
+                setWords([]);
+            }
             setTimeout(() => {
                 ref.current.focus();
             }, 1);
@@ -110,7 +123,7 @@ export default function Typing() {
                 </button>
             </div>
             <div className='box-reset'>
-                <button className='button-typing button-reset' onClick={handleReset} >RESET</button>
+                <button className='button-typing button-reset' onClick={handleReset} disabled={inputResetDisabled} >RESET</button>
             </div>
             <div className='box-timer'>
                 <span className='span-timer'>TIMER</span>

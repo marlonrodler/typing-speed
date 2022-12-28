@@ -72,6 +72,7 @@
     text-align: center;
     align-items: center;
     font-size: 0.8rem;
+    letter-spacing: 0.1rem;
     font-weight: 700;
     padding: 8px;
     margin: 4px;
@@ -218,6 +219,11 @@
 .button-reset:hover {
     cursor: pointer;
     background-color: rgba(102, 102, 102, .7);
+}
+
+.button-reset:disabled {
+    background-color: rgba(102, 102, 102, .5);
+    cursor: not-allowed;
 }
 
 @media screen and (max-width: 768px) {
