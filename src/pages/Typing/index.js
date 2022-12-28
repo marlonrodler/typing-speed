@@ -1,30 +1,45 @@
 import React, { useState, useEffect, useRef } from 'react';
+import api from "../../services/api";
 
 import './styles.css';
 
 export default function Typing() {
-    const [words, setWords] = useState(['Melancia', 'Arroz', 'Feijão', 'Batata', 'Cenoura', 'Macarrão']);
+    const [words, setWords] = useState([]);
     const [word, setWord] = useState('');
     const [score, setScore] = useState(0);
-    const [timer, setTimer] = useState(words.length > 0 ? words[0].length : 0);
+    const [timer, setTimer] = useState(10);
     const [intervalId, setIntervalId] = React.useState(null)
     const [inputDisabled, setInputDisabled] = useState(true);
     const ref = useRef(null);
 
     useEffect(() => {
+        if(timer !== 0 && words.length <= 1) {
+            console.log('words:',words);
+            console.log('entrou');
+            getWords();
+        }
+
         if (timer === 0) {
             handleReset();
         }
     });
+
+    const getWords = async () => {
+        try {
+            const response = await api.get(`random`);
+            setWords(oldArray => [...oldArray,response.data.word] );
+        } catch (error) {
+        }
+    }
 
     const handleReset = () => {
         setWord('');
         clearInterval(intervalId);
         setIntervalId(null);
         setInputDisabled(true);
-        setTimer(words.length > 0 ? words[0].length : 0);
+        setTimer(10);
         setScore(0);
-        setWords(['Melancia', 'Arroz', 'Feijão', 'Batata', 'Cenoura', 'Macarrão']);
+        setWords([]);
     }
 
     const handleChange = async event => {
@@ -34,9 +49,9 @@ export default function Typing() {
         if (words.length > 0) {
             if (value.toLowerCase() === words[0].toLowerCase()) {
                 setWord('');
-                setScore(words[0].length + score + 5);
+                setScore(words[0].length + score);
                 let lengthWord = words[0].length;
-                setTimer(timer => timer + lengthWord);
+                setTimer(timer => timer + (Math.round(timer / lengthWord)) + 3);
                 words.shift();
             }
         }
@@ -92,7 +107,7 @@ export default function Typing() {
                                 return (
                                     <span className='span-text' key={index}>{item}</span>
                                 );
-                            }) : "No item found."
+                            }) : "Searching new words."
                     }
                 </div>
                 <div className='box-form'>
