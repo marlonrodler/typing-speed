@@ -15,8 +15,6 @@ export default function Typing() {
 
     useEffect(() => {
         if (timer !== 0 && words.length < 2) {
-            console.log('words:', words);
-            console.log('entrou');
             getWords();
         }
 
@@ -29,17 +27,14 @@ export default function Typing() {
         try {
             const response = await api.get(`random`);
             let value = (response.data.word).normalize("NFD").replace(/\p{Diacritic}/gu, "");
-            console.log('value:', value);
-            console.log('response.data.word:', response.data.word);
             if (response.data.word.search(' ') === -1 && (value === response.data.word)) {
                 count = count + 1;
                 setWords(oldArray => [...oldArray, response.data.word]);
-                console.log('count:', count);
+
             } else {
                 getWords();
             }
 
-            console.log('words.length:', words.length);
             if (count <= 1) {
                 getWords();
             }
