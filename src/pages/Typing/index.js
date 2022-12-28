@@ -14,7 +14,7 @@ export default function Typing() {
     var count = 0;
 
     useEffect(() => {
-        if (timer !== 0 && words.length < 2) {
+        if (timer !== 0 && words.length === 0) {
             getWords();
         }
 
@@ -28,9 +28,10 @@ export default function Typing() {
             const response = await api.get(`random`);
             let value = (response.data.word).normalize("NFD").replace(/\p{Diacritic}/gu, "");
             if (response.data.word.search(' ') === -1 && (value === response.data.word)) {
-                count = count + 1;
-                setWords(oldArray => [...oldArray, response.data.word]);
-
+                if (count < 3) {
+                    count = count + 1;
+                    setWords(oldArray => [...oldArray, response.data.word]);
+                }
             } else {
                 getWords();
             }
@@ -64,6 +65,10 @@ export default function Typing() {
                 setScore(words[0].length + score);
                 setTimer(timer => timer + 3);
                 words.shift();
+
+                if(words.length === 1){
+                    getWords();
+                }
             }
         }
     };
