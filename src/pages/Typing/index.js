@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 import './styles.css';
 
@@ -9,6 +9,7 @@ export default function Typing() {
     const [timer, setTimer] = useState(words.length > 0 ? words[0].length : 0);
     const [intervalId, setIntervalId] = React.useState(null)
     const [inputDisabled, setInputDisabled] = useState(true);
+    const ref = useRef(null);
 
     useEffect(() => {
         if (timer === 0) {
@@ -50,6 +51,9 @@ export default function Typing() {
     const handleButtonStart = () => {
         setInputDisabled(!inputDisabled);
         if (inputDisabled) {
+            setTimeout(() => {
+                ref.current.focus();
+            }, 1);
             const id = setInterval(() => {
                 setTimer(timer => timer - 1);
             }, 1000);
@@ -92,7 +96,7 @@ export default function Typing() {
                     }
                 </div>
                 <div className='box-form'>
-                    <input value={word} className='input-typing' type='text' onKeyDown={handleKeyDown} onChange={handleChange} disabled={inputDisabled} />
+                    <input ref={ref} value={word} className='input-typing' type='text' onKeyDown={handleKeyDown} onChange={handleChange} disabled={inputDisabled} />
                     {/* <button className='button-typing' type="submit" onClick={handleClick}>OK</button> */}
                 </div>
             </div>
