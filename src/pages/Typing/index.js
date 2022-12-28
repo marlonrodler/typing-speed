@@ -23,10 +23,6 @@ export default function Typing() {
         if (timer === 0) {
             handleReset();
         }
-
-        if(score !== 0){
-            setInputResetDisabled(false);
-        }
     });
 
     const getWords = async () => {
@@ -74,6 +70,7 @@ export default function Typing() {
                 setTimer(timer => timer + 3);
                 words.shift();
 
+                setInputResetDisabled(false);
                 if(words.length === 1){
                     getWords();
                 }
@@ -94,7 +91,6 @@ export default function Typing() {
             if(executeOneTime){
                 setExecuteOneTime(false);
                 setScore(0);
-                setWords([]);
             }
             setTimeout(() => {
                 ref.current.focus();
