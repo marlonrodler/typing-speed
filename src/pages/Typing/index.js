@@ -1,21 +1,41 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import './styles.css';
 
 export default function Typing() {
-    const [words, setWords] = useState(['Arroz', 'Feijão', 'Batata', 'Cenoura', 'Macarrão', 'Melancia']);
+    const [words, setWords] = useState(['Melancia', 'Arroz', 'Feijão', 'Batata', 'Cenoura', 'Macarrão']);
+    const [word, setWord] = useState('');
     const [score, setScore] = useState(0);
-    const [timer, setTimer] = useState(60);
+    const [timer, setTimer] = useState(words.length > 0 ? words[0].length : 0);
     const [intervalId, setIntervalId] = React.useState(null)
     const [inputDisabled, setInputDisabled] = useState(true);
+
+    useEffect(() => {
+        if (timer === 0) {
+            handleReset();
+        }
+    });
+
+    const handleReset = () => {
+        setWord('');
+        clearInterval(intervalId);
+        setIntervalId(null);
+        setInputDisabled(true);
+        setTimer(words.length > 0 ? words[0].length : 0);
+        setScore(0);
+        setWords(['Melancia', 'Arroz', 'Feijão', 'Batata', 'Cenoura', 'Macarrão']);
+    }
 
     const handleChange = async event => {
         event.preventDefault();
         var value = event.target.value;
+        setWord(value.toLowerCase());
         if (words.length > 0) {
             if (value.toLowerCase() === words[0].toLowerCase()) {
-                event.target.value = '';
+                setWord('');
                 setScore(words[0].length + score + 5);
+                let lengthWord = words[0].length;
+                setTimer(timer => timer + lengthWord);
                 words.shift();
             }
         }
@@ -27,22 +47,11 @@ export default function Typing() {
         }
     };
 
-    const changeButtonStart = (event) => {
+    const handleButtonStart = () => {
         setInputDisabled(!inputDisabled);
         if (inputDisabled) {
-            let count = timer;
             const id = setInterval(() => {
                 setTimer(timer => timer - 1);
-                count -= 1;
-
-                if(count === 0) {
-                    clearInterval(id);
-                    setIntervalId(null);
-                    setInputDisabled(true);
-                    setTimer(60);
-                    setScore(0);
-                    setWords(['Arroz', 'Feijão', 'Batata', 'Cenoura', 'Macarrão', 'Melancia']);
-                }
             }, 1000);
             setIntervalId(id);
         } else {
@@ -58,11 +67,14 @@ export default function Typing() {
                 <span className='span-score-number'>{score}</span>
             </div>
             <div className='box-play'>
-                <button className={inputDisabled ? 'button-typing button-play' : 'button-typing button-stop'} onClick={changeButtonStart}>
+                <button className={inputDisabled ? 'button-typing button-play' : 'button-typing button-stop'} onClick={handleButtonStart}>
                     {
                         inputDisabled ? 'PLAY' : 'STOP'
                     }
                 </button>
+            </div>
+            <div className='box-reset'>
+                <button className='button-typing button-reset' onClick={handleReset} >RESET</button>
             </div>
             <div className='box-timer'>
                 <span className='span-timer'>TIMER</span>
@@ -80,7 +92,7 @@ export default function Typing() {
                     }
                 </div>
                 <div className='box-form'>
-                    <input className='input-typing' type='text' onKeyDown={handleKeyDown} onChange={handleChange} disabled={inputDisabled} />
+                    <input value={word} className='input-typing' type='text' onKeyDown={handleKeyDown} onChange={handleChange} disabled={inputDisabled} />
                     {/* <button className='button-typing' type="submit" onClick={handleClick}>OK</button> */}
                 </div>
             </div>

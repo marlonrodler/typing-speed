@@ -195,3 +195,27 @@
     cursor: pointer;
     background-color: rgba(239, 71, 111, .7);
 }
+
+.box-reset{
+    position: absolute;
+    bottom: 0;
+    margin: 20px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100px;
+    width: 100px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.button-reset{
+    background-color: #666;
+}
+
+.button-reset:hover{
+    cursor: pointer;
+    background-color: rgba(102, 102, 102, .7);
+}
