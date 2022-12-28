@@ -31,7 +31,7 @@
     color: #000;
 }
 
-.span-score-number{
+.span-score-number {
     font-size: 2rem;
     font-weight: 700;
     color: rgba(0, 0, 0, 0.2);
@@ -50,7 +50,7 @@
     box-shadow: 0 0 10px rgb(0 0 0 / 20%);
 }
 
-.box-words{
+.box-words {
     display: flex;
     flex-direction: row;
     padding: 12px;
@@ -59,14 +59,14 @@
     flex-wrap: wrap;
 }
 
-.box-form{
+.box-form {
     padding: 10px;
     display: flex;
     width: 93.5%;
     justify-content: center;
 }
 
-.span-text{
+.span-text {
     text-transform: uppercase;
     display: flex;
     text-align: center;
@@ -80,7 +80,7 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
-.input-typing{
+.input-typing {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -95,11 +95,11 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
-.input-typing:focus{
+.input-typing:focus {
     outline: none;
 }
 
-.button-typing{
+.button-typing {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -113,12 +113,12 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
-.button-typing:hover{
+.button-typing:hover {
     cursor: pointer;
     background-color: rgba(0, 0, 0, 0.7);
 }
 
-.box-timer{
+.box-timer {
     position: absolute;
     top: 0;
     left: 0;
@@ -135,19 +135,19 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
-.span-timer{
+.span-timer {
     font-size: 1rem;
     font-weight: 700;
     color: #000;
 }
 
-.span-timer-number{ 
+.span-timer-number {
     font-size: 1.5rem;
     font-weight: 700;
     color: rgba(0, 0, 0, 0.2);
 }
 
-.box-play{
+.box-play {
     position: absolute;
     top: 0;
     margin: 20px;
@@ -163,7 +163,7 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
-.button-typing{
+.button-typing {
     width: 100%;
     height: 100%;
     display: flex;
@@ -178,25 +178,25 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
-.button-play{
+.button-play {
     background-color: #06D6A0;
 }
 
-.button-play:hover{
+.button-play:hover {
     cursor: pointer;
     background-color: rgba(6, 214, 160, .7);
 }
 
-.button-stop{
+.button-stop {
     background-color: #EF476F;
 }
 
-.button-stop:hover{
+.button-stop:hover {
     cursor: pointer;
     background-color: rgba(239, 71, 111, .7);
 }
 
-.box-reset{
+.box-reset {
     position: absolute;
     bottom: 0;
     margin: 20px;
@@ -211,11 +211,45 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
-.button-reset{
+.button-reset {
     background-color: #666;
 }
 
-.button-reset:hover{
+.button-reset:hover {
     cursor: pointer;
     background-color: rgba(102, 102, 102, .7);
+}
+
+@media screen and (max-width: 768px) {
+    .span-timer-number{
+        font-size: 2rem;
+    }
+
+    .box-typing {
+        background-color: unset;
+        border-radius: unset;
+        box-shadow: unset;
+    }
+
+    .box-timer {
+        background-color: unset;
+        border-radius: unset;
+        box-shadow: unset;
+    }
+
+    .box-score {
+        background-color: unset;
+        border-radius: unset;
+        box-shadow: unset;
+    }
+
+    .box-reset {
+        left: 0;
+    }
+
+    .box-play {
+        right: 0;
+        bottom: 0;
+        top: unset;
+    }
 }
