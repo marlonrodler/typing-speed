@@ -105,7 +105,7 @@ export default function Typing() {
                 refInput.current.focus();
             }, 1);
             const id = setInterval(() => {
-                // setTimer(timer => timer - 1);
+                setTimer(timer => timer - 1);
             }, 1000);
             setIntervalId(id);
         } else {
