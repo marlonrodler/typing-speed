@@ -1,3 +1,8 @@
+:root {
+    --word-color: #000;
+    --word: '';
+}
+
 .container {
     display: flex;
     flex-direction: column;
@@ -226,16 +231,8 @@
     cursor: not-allowed;
 }
 
-.span-text-success {
-    color: #06D6A0;
-}
-
-.span-text-error {
-    color: #EF476F;
-}
-
 @media screen and (max-width: 768px) {
-    .span-timer-number{
+    .span-timer-number {
         font-size: 2rem;
     }
 

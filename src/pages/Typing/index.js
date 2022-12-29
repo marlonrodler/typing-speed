@@ -64,13 +64,21 @@ export default function Typing() {
         event.preventDefault();
         var value = event.target.value;
         setWord(value.toLowerCase());
+        var calcWordPercent = ((value.length * 100) / words[0].length);
+
         if (words.length > 0) {
+            if (value === words[0].substring(0, value.length)) {
+                refSpan[0].style.background = `linear-gradient(to right, #06D6A0 ${calcWordPercent}%, #FFF 0%)`;
+            } else {
+                refSpan[0].style.background = `linear-gradient(to right, #EF476F ${calcWordPercent}%, #FFF 0%)`;
+            }
+
             if (value.toLowerCase() === words[0].toLowerCase()) {
                 setWord('');
                 setScore(words[0].length + score);
                 setTimer(timer => timer + 3);
                 words.shift();
-
+                refSpan[0].style.background = `#FFF`;
                 setInputResetDisabled(false);
                 if (words.length === 1) {
                     getWords();
@@ -97,7 +105,7 @@ export default function Typing() {
                 refInput.current.focus();
             }, 1);
             const id = setInterval(() => {
-                setTimer(timer => timer - 1);
+                // setTimer(timer => timer - 1);
             }, 1000);
             setIntervalId(id);
         } else {
