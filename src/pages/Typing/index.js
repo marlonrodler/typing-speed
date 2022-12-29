@@ -12,7 +12,8 @@ export default function Typing() {
     const [inputDisabled, setInputDisabled] = useState(true);
     const [inputResetDisabled, setInputResetDisabled] = useState(true);
     const [executeOneTime, setExecuteOneTime] = useState(false);
-    const ref = useRef(null);
+    const refInput = useRef(null);
+    const refSpan = useRef(null);
     var count = 0;
 
     useEffect(() => {
@@ -71,7 +72,7 @@ export default function Typing() {
                 words.shift();
 
                 setInputResetDisabled(false);
-                if(words.length === 1){
+                if (words.length === 1) {
                     getWords();
                 }
             }
@@ -88,12 +89,12 @@ export default function Typing() {
         setInputDisabled(!inputDisabled);
         if (inputDisabled) {
             setInputResetDisabled(false);
-            if(executeOneTime){
+            if (executeOneTime) {
                 setExecuteOneTime(false);
                 setScore(0);
             }
             setTimeout(() => {
-                ref.current.focus();
+                refInput.current.focus();
             }, 1);
             const id = setInterval(() => {
                 setTimer(timer => timer - 1);
@@ -131,13 +132,13 @@ export default function Typing() {
                         words.length > 0 ?
                             words.map((item, index) => {
                                 return (
-                                    <span className='span-text' key={index}>{item}</span>
+                                    <span ref={(span) => { refSpan[index] = span }} className='span-text' key={index}>{item}</span>
                                 );
                             }) : "Searching new words."
                     }
                 </div>
                 <div className='box-form'>
-                    <input ref={ref} value={word} className='input-typing' type='text' onKeyDown={handleKeyDown} onChange={handleChange} disabled={inputDisabled} />
+                    <input ref={refInput} value={word} className='input-typing' type='text' onKeyDown={handleKeyDown} onChange={handleChange} disabled={inputDisabled} />
                 </div>
             </div>
         </div>
