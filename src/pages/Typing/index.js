@@ -31,15 +31,12 @@ export default function Typing() {
             const response = await api.get(`random`);
             let value = (response.data.word).normalize("NFD").replace(/\p{Diacritic}/gu, "");
             if (response.data.word.search(' ') === -1 && (value === response.data.word)) {
-                if (count < 3) {
+                if (count < 4) {
                     count = count + 1;
                     setWords(oldArray => [...oldArray, response.data.word]);
+                    getWords();
                 }
             } else {
-                getWords();
-            }
-
-            if (count <= 1) {
                 getWords();
             }
         } catch (error) {
@@ -64,8 +61,11 @@ export default function Typing() {
         event.preventDefault();
         var value = event.target.value;
         setWord(value.toLowerCase());
-        var calcWordPercent = ((value.length * 100) / words[0].length);
+        validateWord(value);
+    };
 
+    const validateWord = (value) => {
+        var calcWordPercent = ((value.length * 100) / words[0].length);
         if (words.length > 0) {
             if (value.toLowerCase() === (words[0].substring(0, value.length)).toLowerCase()) {
                 refSpan[0].style.background = `linear-gradient(to right, #06D6A0 ${calcWordPercent}%, #FFF 0%)`;
@@ -85,7 +85,7 @@ export default function Typing() {
                 }
             }
         }
-    };
+    }
 
     const handleKeyDown = (event) => {
         if (event.key === 'Enter' || event.key === ' ') {
