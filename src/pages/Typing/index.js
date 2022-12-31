@@ -28,9 +28,13 @@ export default function Typing() {
         }
 
         if (words.length >= 6) {
-            setLoading(false);
+            disabledLoading();
         }
     });
+
+    const disabledLoading = () => {
+        setLoading(false);
+    }
 
     const getWords = async () => {
         try {
