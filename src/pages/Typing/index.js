@@ -31,7 +31,7 @@ export default function Typing() {
             const response = await api.get(`random`);
             let value = (response.data.word).normalize("NFD").replace(/\p{Diacritic}/gu, "");
             if (response.data.word.search(' ') === -1 && (value === response.data.word)) {
-                if (count < 4) {
+                if (count < 11) {
                     count = count + 1;
                     setWords(oldArray => [...oldArray, response.data.word]);
                     getWords();
@@ -72,7 +72,7 @@ export default function Typing() {
                 setTimer(timer => timer + 3);
                 setWords(words.filter(item => item !== value.toLowerCase()));
                 setInputResetDisabled(false);
-                if (words.length === 3) {
+                if (words.length === 5) {
                     getWords();
                 }
                 Object.keys(refSpan).map((key, index) => {
@@ -149,9 +149,13 @@ export default function Typing() {
                     {
                         words.length > 0 ?
                             words.map((item, index) => {
-                                return (
-                                    <span ref={(span) => { refSpan[index] = span }} className='span-text' key={index}>{item}</span>
-                                );
+                                if(index < 4) {
+                                    return (
+                                        <span ref={(span) => { refSpan[index] = span }} className='span-text' key={index}>{item}</span>
+                                    );
+                                } else {
+                                    return null;
+                                }
                             }) : "Searching new words."
                     }
                 </div>
