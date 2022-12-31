@@ -77,7 +77,7 @@ export default function Typing() {
                 }
                 Object.keys(refSpan).map((key, index) => {
                     if (refSpan[index] !== undefined && refSpan[index] !== null) {
-                        refSpan[index].style.background = `#FFF`;
+                        return refSpan[index].style.background = `#FFF`;
                     }
                 });
             } else {
@@ -85,9 +85,9 @@ export default function Typing() {
                     if (refSpan[index] !== undefined && refSpan[index] !== null) {
                         var calcWordPercent = ((value.length * 100) / (refSpan[index].firstChild.nodeValue).length);
                         if (value.toLowerCase() === (refSpan[index].firstChild.nodeValue.substring(0, value.length)).toLowerCase()) {
-                            refSpan[index].style.background = `linear-gradient(to right, #06D6A0 ${calcWordPercent}%, #FFF 0%)`;
+                            return refSpan[index].style.background = `linear-gradient(to right, #06D6A0 ${calcWordPercent}%, #FFF 0%)`;
                         } else {
-                            refSpan[index].style.background = `linear-gradient(to right, #EF476F ${calcWordPercent}%, #FFF 0%)`;
+                            return refSpan[index].style.background = `linear-gradient(to right, #EF476F ${calcWordPercent}%, #FFF 0%)`;
                         }
                     }
                 });
