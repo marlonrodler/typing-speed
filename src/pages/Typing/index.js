@@ -1,5 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import ClipLoader from "react-spinners/ClipLoader";
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+
 import api from "../../services/api";
 
 import './styles.css';
@@ -16,6 +19,7 @@ export default function Typing() {
     const [loading, setLoading] = useState(true);
     const refInput = useRef(null);
     const refSpan = useRef(null);
+    const MySwal = withReactContent(Swal);
     var count = 0;
 
     useEffect(() => {
@@ -34,6 +38,17 @@ export default function Typing() {
 
     const disabledLoading = () => {
         setLoading(false);
+    }
+
+    const handleAlert = () => {
+        MySwal.fire({
+            timer: 2000,
+            html: `<center><b>Timer +3</b> | <b>Score +${word.length}</b></center>`,
+            toast: true,
+            position: 'top',
+            showConfirmButton: false,
+            showCloseButton: false
+        });
     }
 
     const getWords = async () => {
@@ -65,6 +80,7 @@ export default function Typing() {
         setWords([]);
         setInputResetDisabled(true);
         setExecuteOneTime(true);
+        setLoading(false);
     }
 
     const handleChange = async event => {
@@ -91,6 +107,7 @@ export default function Typing() {
                     }
                     return null;
                 });
+                handleAlert();
             } else {
                 Object.keys(refSpan).map((key, index) => {
                     if (refSpan[index] !== undefined && refSpan[index] !== null) {
