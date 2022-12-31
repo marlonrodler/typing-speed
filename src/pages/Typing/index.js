@@ -33,11 +33,17 @@ export default function Typing() {
 
         if (words.length >= 6) {
             disabledLoading();
+        } else {
+            enabledLoading();
         }
     });
 
     const disabledLoading = () => {
         setLoading(false);
+    }
+
+    const enabledLoading = () => {
+        setLoading(true);
     }
 
     const handleAlert = () => {
@@ -80,7 +86,6 @@ export default function Typing() {
         setWords([]);
         setInputResetDisabled(true);
         setExecuteOneTime(true);
-        setLoading(false);
     }
 
     const handleChange = async event => {
