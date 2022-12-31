@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import ClipLoader from "react-spinners/ClipLoader";
 import api from "../../services/api";
 
 import './styles.css';
@@ -12,6 +13,7 @@ export default function Typing() {
     const [inputDisabled, setInputDisabled] = useState(true);
     const [inputResetDisabled, setInputResetDisabled] = useState(true);
     const [executeOneTime, setExecuteOneTime] = useState(false);
+    const [loading, setLoading] = useState(true);
     const refInput = useRef(null);
     const refSpan = useRef(null);
     var count = 0;
@@ -23,6 +25,10 @@ export default function Typing() {
 
         if (timer === 0) {
             handleReset();
+        }
+
+        if (words.length >= 6) {
+            setLoading(false);
         }
     });
 
@@ -145,18 +151,25 @@ export default function Typing() {
                 <span className='span-timer-number'>{timer}</span>
             </div>
             <div className='box-typing'>
+                <ClipLoader
+                    color="#666"
+                    loading={loading}
+                    size={150}
+                    aria-label="Loading Spinner"
+                    data-testid="loader"
+                />
                 <div className='box-words'>
                     {
-                        words.length > 0 ?
+                        words.length >= 6 ?
                             words.map((item, index) => {
-                                if(index < 4) {
+                                if (index < 4) {
                                     return (
                                         <span ref={(span) => { refSpan[index] = span }} className='span-text' key={index}>{item}</span>
                                     );
                                 } else {
                                     return null;
                                 }
-                            }) : "Searching new words."
+                            }) : "Searching words."
                     }
                 </div>
                 <div className='box-form'>
