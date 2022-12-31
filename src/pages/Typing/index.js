@@ -65,24 +65,32 @@ export default function Typing() {
     };
 
     const validateWord = (value) => {
-        var calcWordPercent = ((value.length * 100) / words[0].length);
         if (words.length > 0) {
-            if (value.toLowerCase() === (words[0].substring(0, value.length)).toLowerCase()) {
-                refSpan[0].style.background = `linear-gradient(to right, #06D6A0 ${calcWordPercent}%, #FFF 0%)`;
-            } else {
-                refSpan[0].style.background = `linear-gradient(to right, #EF476F ${calcWordPercent}%, #FFF 0%)`;
-            }
-
-            if (value.toLowerCase() === words[0].toLowerCase()) {
+            if (words.includes(value.toLowerCase())) {
                 setWord('');
-                setScore(words[0].length + score);
+                setScore(value.length + score);
                 setTimer(timer => timer + 3);
-                words.shift();
-                refSpan[0].style.background = `#FFF`;
+                setWords(words.filter(item => item !== value.toLowerCase()));
                 setInputResetDisabled(false);
-                if (words.length === 1) {
+                if (words.length === 3) {
                     getWords();
                 }
+                Object.keys(refSpan).map((key, index) => {
+                    if (refSpan[index] !== undefined && refSpan[index] !== null) {
+                        refSpan[index].style.background = `#FFF`;
+                    }
+                });
+            } else {
+                Object.keys(refSpan).map((key, index) => {
+                    if (refSpan[index] !== undefined && refSpan[index] !== null) {
+                        var calcWordPercent = ((value.length * 100) / (refSpan[index].firstChild.nodeValue).length);
+                        if (value.toLowerCase() === (refSpan[index].firstChild.nodeValue.substring(0, value.length)).toLowerCase()) {
+                            refSpan[index].style.background = `linear-gradient(to right, #06D6A0 ${calcWordPercent}%, #FFF 0%)`;
+                        } else {
+                            refSpan[index].style.background = `linear-gradient(to right, #EF476F ${calcWordPercent}%, #FFF 0%)`;
+                        }
+                    }
+                });
             }
         }
     }
@@ -105,7 +113,7 @@ export default function Typing() {
                 refInput.current.focus();
             }, 1);
             const id = setInterval(() => {
-                setTimer(timer => timer - 1);
+                // setTimer(timer => timer - 1);
             }, 1000);
             setIntervalId(id);
         } else {
