@@ -79,6 +79,7 @@ export default function Typing() {
                     if (refSpan[index] !== undefined && refSpan[index] !== null) {
                         return refSpan[index].style.background = `#FFF`;
                     }
+                    return null;
                 });
             } else {
                 Object.keys(refSpan).map((key, index) => {
@@ -90,6 +91,7 @@ export default function Typing() {
                             return refSpan[index].style.background = `linear-gradient(to right, #EF476F ${calcWordPercent}%, #FFF 0%)`;
                         }
                     }
+                    return null;
                 });
             }
         }
