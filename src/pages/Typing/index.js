@@ -63,9 +63,11 @@ export default function Typing() {
             let value = (response.data.word).normalize("NFD").replace(/\p{Diacritic}/gu, "");
             if (response.data.word.search(' ') === -1 && (value === response.data.word)) {
                 if (count <= 25) {
-                    count = count + 1;
-                    setWords(oldArray => [...oldArray, response.data.word]);
-                    getWords();
+                    if (!words.includes(value.toLowerCase())){
+                        count = count + 1;
+                        setWords(oldArray => [...oldArray, response.data.word]);
+                        getWords();
+                    }
                 }
             } else {
                 getWords();
