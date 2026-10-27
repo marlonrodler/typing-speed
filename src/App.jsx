@@ -120,9 +120,15 @@ export default function App() {
                 const m = status === 'running' ? matchInfo(w, state.input) : { ok: 0, wrong: false };
                 const active = m.ok > 0;
                 return (
-                  <li key={w} className={`word${active ? ' is-active' : ''}${active && m.wrong ? ' is-wrong' : ''}`}>
-                    <span className="word__ok">{w.slice(0, m.ok)}</span>
-                    <span className="word__rest">{w.slice(m.ok)}</span>
+                  <li
+                    key={w}
+                    className={`word${w.length >= 10 ? ' is-long' : ''}${active ? ' is-active' : ''}${active && m.wrong ? ' is-wrong' : ''}`}
+                    style={{ '--len': w.length }}
+                  >
+                    <span className="word__text">
+                      <span className="word__ok">{w.slice(0, m.ok)}</span>
+                      <span className="word__rest">{w.slice(m.ok)}</span>
+                    </span>
                     <span className="word__pts" aria-label={`${w.length} pontos`}>+{w.length}</span>
                   </li>
                 );
@@ -144,7 +150,7 @@ export default function App() {
             onChange={(e) => dispatch({ type: 'type', value: e.target.value, now: performance.now() })}
             onKeyDown={(e) => { if (e.key === ' ') e.preventDefault(); }}
             aria-disabled={status !== 'running'}
-            placeholder={status === 'running' ? 'Digite qualquer palavra acima' : 'Aperte Enter para começar'}
+            placeholder={status === 'running' ? 'Digite uma palavra' : 'Aperte Enter para começar'}
             autoComplete="off"
             autoCorrect="off"
             autoCapitalize="none"

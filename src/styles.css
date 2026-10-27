@@ -67,13 +67,21 @@ a { color: var(--green); }
 .board { padding: clamp(20px, 4vw, 36px); background: var(--bg-2); border: 1px solid var(--line); border-radius: 20px; display: grid; gap: 20px; }
 .words { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; min-height: 9.5rem; }
 @media (min-width: 720px) { .words { grid-template-columns: repeat(4, minmax(0, 1fr)); min-height: 5rem; } }
+/* No celular, palavra longa ocupa a linha inteira para não ficar com letra miúda */
+@media (max-width: 719px) { .words { grid-auto-flow: dense; } .word.is-long { grid-column: span 2; } }
 .word {
   position: relative; display: flex; align-items: center; justify-content: center;
-  min-height: 4.25rem; padding: 12px 10px 18px;
+  min-width: 0; min-height: 4.25rem; padding: 12px 10px 18px;
   background: var(--panel); border: 1px solid var(--line); border-radius: 12px;
-  font: 600 clamp(1rem, 0.8rem + 1vw, 1.35rem)/1.2 var(--mono); letter-spacing: 0.01em;
-  overflow-wrap: anywhere; text-align: center;
+  container-type: inline-size;
   transition: border-color 120ms, background-color 120ms, opacity 120ms;
+}
+/* A palavra fica sempre numa linha só: palavras longas diminuem a fonte para caber no quadro.
+   Cada letra da fonte mono ocupa ~0,6 da altura; 100cqi é a largura do quadro. */
+.word__text {
+  white-space: nowrap;
+  font: 600 min(clamp(1rem, 0.8rem + 1vw, 1.35rem), calc(100cqi / (var(--len, 8) * 0.6)))/1.2 var(--mono);
+  letter-spacing: 0;
 }
 .word__ok { color: var(--green); }
 .word__rest { color: var(--ink); }
