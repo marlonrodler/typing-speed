@@ -37,3 +37,13 @@ it('usa a lista reserva se o dicionário estiver fora do ar', async () => {
   await act(async () => {});
   expect(screen.getAllByRole('listitem')).toHaveLength(4);
 });
+
+it('começa em até 1,5 s mesmo se o dicionário estiver lento', async () => {
+  vi.useFakeTimers({ shouldAdvanceTime: true });
+  vi.stubGlobal('fetch', vi.fn(() => new Promise(() => {})));
+  render(<App />);
+  await act(async () => { vi.advanceTimersByTime(1600); });
+  expect(screen.getAllByRole('listitem')).toHaveLength(4);
+  expect(screen.queryByText(/lista reserva/i)).not.toBeInTheDocument();
+  vi.useRealTimers();
+});

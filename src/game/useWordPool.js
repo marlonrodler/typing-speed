@@ -4,7 +4,9 @@ import { FALLBACK_WORDS, acceptWord, fetchRandomWord, shuffle } from './words';
 const TARGET = 12; // palavras guardadas à frente
 const PARALLEL = 6; // pedidos ao mesmo tempo (o original fazia um por vez)
 const TIMEOUT_MS = 4000;
-const MAX_TRIES = 40; // evita insistir para sempre se a API devolver só palavras inválidas
+const MAX_TRIES = 40;
+const QUICK_START = 4; // palavras para poder começar
+const QUICK_START_MS = 1500; // evita insistir para sempre se a API devolver só palavras inválidas
 
 /**
  * Mantém um estoque de palavras do Dicionário Aberto.
@@ -60,9 +62,17 @@ export function useWordPool(count, onWords) {
     if (count < TARGET / 2) fill(count);
   }, [count, fill]);
 
-  // Primeira carga
+  // Primeira carga. Se o dicionário demorar, completa as 4 primeiras palavras com a lista local
+  // para dar para começar logo; as próximas continuam vindo do dicionário.
+  const countRef = useRef(count);
+  countRef.current = count;
   useEffect(() => {
     fill(0);
+    const timer = setTimeout(() => {
+      const missing = QUICK_START - countRef.current;
+      if (missing > 0) onWordsRef.current(shuffle(FALLBACK_WORDS).slice(0, missing));
+    }, QUICK_START_MS);
+    return () => clearTimeout(timer);
   }, [fill]);
 
   return { source, target: TARGET };

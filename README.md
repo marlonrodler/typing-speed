@@ -10,7 +10,7 @@ Jogo de digitação em português contra o relógio. Você começa com 10 segund
 - Quatro palavras ficam na tela; digite qualquer uma delas. As letras certas acendem em verde e o erro aparece em vermelho.
 - **Enter** começa ou continua, **Esc** pausa. O jogo pausa sozinho se você trocar de aba.
 - O recorde fica salvo no seu navegador.
-- Se o dicionário on-line não responder, o jogo usa uma lista reserva de palavras e avisa na tela.
+- Se o dicionário demorar mais de 1,5 segundo, as primeiras palavras vêm de uma lista local, para o jogo começar logo. Se ele não responder, o jogo segue com a lista reserva e avisa na tela.
 
 ## Tecnologias
 
