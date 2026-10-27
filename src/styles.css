@@ -18,12 +18,15 @@
 }
 
 *, *::before, *::after { box-sizing: border-box; }
-html, body, #root { height: 100%; }
+html, body, #root { min-height: 100%; }
+/* O brilho verde fica só no topo e não se repete: antes o fundo se repetia a cada
+   altura de tela e aparecia uma emenda no meio da página */
+html {
+  background: radial-gradient(60rem 30rem at 50% -10%, rgb(6 214 160 / 0.12), transparent 70%) no-repeat, var(--bg);
+}
 body {
   margin: 0;
-  background:
-    radial-gradient(60rem 30rem at 50% -10%, rgb(6 214 160 / 0.12), transparent 70%),
-    var(--bg);
+  background: transparent;
   color: var(--ink);
   font: 400 1rem/1.5 var(--sans);
   -webkit-font-smoothing: antialiased;
@@ -68,7 +71,6 @@ a { color: var(--green); }
 .words { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; min-height: 9.5rem; }
 @media (min-width: 720px) { .words { grid-template-columns: repeat(4, minmax(0, 1fr)); min-height: 5rem; } }
 /* No celular, palavra longa ocupa a linha inteira para não ficar com letra miúda */
-@media (max-width: 719px) { .words { grid-auto-flow: dense; } .word.is-long { grid-column: span 2; } }
 .word {
   position: relative; display: flex; align-items: center; justify-content: center;
   min-width: 0; min-height: 4.25rem; padding: 12px 10px 18px;
@@ -80,7 +82,7 @@ a { color: var(--green); }
    Cada letra da fonte mono ocupa ~0,6 da altura; 100cqi é a largura do quadro. */
 .word__text {
   white-space: nowrap;
-  font: 600 min(clamp(1rem, 0.8rem + 1vw, 1.35rem), calc(100cqi / (var(--len, 8) * 0.6)))/1.2 var(--mono);
+  font: 600 max(12px, min(clamp(1rem, 0.8rem + 1vw, 1.35rem), calc(100cqi / (var(--len, 8) * 0.6))))/1.2 var(--mono);
   letter-spacing: 0;
 }
 .word__ok { color: var(--green); }
@@ -129,7 +131,7 @@ a { color: var(--green); }
 .btn--primary:hover:not(:disabled) { background: #2ee3b3; }
 .btn--pause { background: var(--yellow); color: #3a2a00; }
 .btn--pause:hover:not(:disabled) { background: #ffdc8a; }
-.btn--ghost { background: transparent; color: var(--ink-2); border: 1px solid var(--line); }
+.btn--ghost { background: var(--panel); color: var(--ink-2); border: 1px solid var(--line); }
 .btn--ghost:hover:not(:disabled) { color: var(--ink); background: rgb(255 255 255 / 0.05); }
 kbd { font: 600 0.75rem var(--mono); padding: 3px 7px; border-radius: 6px; background: rgb(0 0 0 / 0.18); }
 
@@ -155,10 +157,27 @@ kbd { font: 600 0.75rem var(--mono); padding: 3px 7px; border-radius: 6px; backg
 
 .foot { padding: 20px 16px 28px; text-align: center; color: var(--ink-3); font-size: 0.8125rem; }
 
+/* No celular, o placar vira uma faixa compacta presa no topo:
+   o tempo continua visível enquanto o teclado está aberto */
 @media (max-width: 560px) {
-  .hud { grid-template-columns: 1fr 1fr; }
-  .timer { grid-column: 1 / -1; }
+  .stage { padding-top: 0; gap: 14px; }
+  .hud {
+    position: sticky; top: 0; z-index: 5;
+    grid-template-columns: 1.3fr 1fr 1fr; gap: 8px;
+    margin-inline: -16px; padding: 8px 16px;
+    background: var(--bg); border-bottom: 1px solid var(--line);
+  }
+  .hud > div { padding: 8px 12px 10px; border-radius: 10px; }
+  .hud__label { font-size: 0.75rem; }
+  .hud__value { font-size: 1.375rem; }
+  .board { padding: 16px; gap: 14px; }
+  .word { min-height: 3.5rem; padding: 10px 8px 16px; }
+  .input { height: 54px; font-size: 1.25rem; }
+  .controls { display: grid; grid-template-columns: 1fr 1fr; }
+  .controls .btn { min-width: 0; padding: 0 12px; justify-content: center; }
 }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { transition: none !important; animation: none !important; }
 }
+/* Atalhos de teclado não fazem sentido no celular */
+@media (hover: none) and (pointer: coarse) { .btn kbd { display: none; } }

@@ -122,7 +122,7 @@ export default function App() {
                 return (
                   <li
                     key={w}
-                    className={`word${w.length >= 10 ? ' is-long' : ''}${active ? ' is-active' : ''}${active && m.wrong ? ' is-wrong' : ''}`}
+                    className={`word${active ? ' is-active' : ''}${active && m.wrong ? ' is-wrong' : ''}`}
                     style={{ '--len': w.length }}
                   >
                     <span className="word__text">
