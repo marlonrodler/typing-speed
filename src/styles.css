@@ -129,8 +129,8 @@ kbd { font: 600 0.75rem var(--mono); padding: 3px 7px; border-radius: 6px; backg
 .rules__note { color: var(--yellow); }
 
 /* Resultado */
-.result { position: fixed; inset: 0; display: grid; place-items: center; padding: 16px; background: rgb(8 12 18 / 0.72); backdrop-filter: blur(6px); }
-.result__card { width: min(100%, 420px); padding: 32px; text-align: center; background: var(--panel); border: 1px solid var(--line); border-radius: 22px; box-shadow: 0 30px 80px -20px rgb(0 0 0 / 0.7); }
+.result { position: fixed; inset: 0; display: flex; overflow-y: auto; padding: 16px; background: rgb(8 12 18 / 0.72); backdrop-filter: blur(6px); }
+.result__card { margin: auto; width: min(100%, 420px); padding: 32px; text-align: center; background: var(--panel); border: 1px solid var(--line); border-radius: 22px; box-shadow: 0 30px 80px -20px rgb(0 0 0 / 0.7); }
 .result__eyebrow { margin: 0; color: var(--yellow); font-weight: 600; }
 .result__score { margin: 6px 0 20px; font: 800 4rem/1 var(--mono); letter-spacing: -0.05em; }
 .result__score span { display: block; margin-top: 6px; font: 500 1rem var(--sans); letter-spacing: 0; color: var(--ink-3); }
